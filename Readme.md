@@ -9,7 +9,7 @@
 ### **Credits**  
   * Written By: Amin Babaeipanah  
   * Modified By: BetaLeaf  
-  * NirCmdC By: Nir Sofer
+  * NirCmd By: Nir Sofer
 
 ### **Copyrights**
 	
