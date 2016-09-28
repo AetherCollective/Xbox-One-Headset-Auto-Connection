@@ -8,7 +8,7 @@
 
 ### **Credits**  
   * Written By: Amin Babaeipanah  
-  * Modified By: BetaLeaf  
+  * Modified By: [BetaLeaf](http://betaleaf.net/)  
   * NirCmd By: Nir Sofer
   
 ### **Contributers**
