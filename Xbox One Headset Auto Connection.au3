@@ -4,13 +4,14 @@
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 ;Written By: Amin Babaeipanah
 ;Modified By: BetaLeaf
+Opt("TrayIconHide", 1)
 $winTitle = "Xbox One Headset Auto Connection"
 $WorkingDirectory = @TempDir & "\BetaLeaf Software\" & $winTitle
 DirCreate(@TempDir & "\BetaLeaf Software\" & $winTitle)
 FileInstall("nircmdc.exe", @TempDir & "\BetaLeaf Software\" & $winTitle & "\nircmdc.exe", 1)
 Setup()
 While 1
-	If GetDevices("") = 1 Then
+	If GetDevices() = 1 Then
 		For $i = 0 To 2
 			ShellExecute($WorkingDirectory & "\NIRCMDC.exe", 'setdefaultsounddevice "Headphones" ' & $i & '"', @ScriptDir, "", @SW_HIDE) ;Set Default Playback Device to Slot $Slot.
 		Next
@@ -19,19 +20,18 @@ While 1
 		Next
 		Do
 			Sleep(5000)
-		Until GetDevices("") = 2
+		Until GetDevices() = 2
 	EndIf
 	Sleep(1000)
 WEnd
-Func GetDevices($name)
-	Local $objWMIService = ObjGet('winmgmts:\\localhost\root\CIMV2')
-	Local $colItems = $objWMIService.ExecQuery("SELECT * FROM Win32_PnPEntity WHERE Name LIKE '%" & $name & "%'", "WQL", 48)
-	If IsObj($colItems) Then
-		For $objItem In $colItems
-			Select
-				Case StringInStr($objItem.PNPDeviceID, "USB\VID_045E&PID_02E4&IGA_00") <> 0
-					Return 1
-			EndSelect
+Func GetDevices()
+	Local $oDevice, $PNPDeviceID, $oWMIService = ObjGet("winmgmts:\\" & @ComputerName & "\root\CIMV2")
+	If Not IsObj($oWMIService) Then Exit MsgBox(16, "Error", "WMI error")
+	Local $oPNPDevices = $oWMIService.ExecQuery("SELECT * FROM Win32_PnPEntity WHERE DeviceID Like '%USB\\VID_045E&PID_02E4&IGA_00%'", "WQL", 48)
+	If IsObj($oPNPDevices) Then
+		For $oDevice In $oPNPDevices
+			$PNPDeviceID = $oDevice.PNPDeviceID
+			Return 1
 		Next
 	EndIf
 	Return 2
@@ -61,4 +61,4 @@ Func Setup()
 		EndSelect
 	EndIf
 EndFunc   ;==>Setup
- 
+
