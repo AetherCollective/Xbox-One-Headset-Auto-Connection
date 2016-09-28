@@ -10,6 +10,9 @@
   * Written By: Amin Babaeipanah  
   * Modified By: BetaLeaf  
   * NirCmd By: Nir Sofer
+  
+### **Contributers**
+  * [jguinch](https://www.autoitscript.com/forum/profile/30100-jguinch/) for the modified GetDevices() function.
 
 ### **Copyrights**
 	
